@@ -174,18 +174,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    /* -------- JSON Cleanup -------- */
+    /* -------- Improved JSON Cleanup (The Fix) -------- */
+
+    // 1. Log the raw text for debugging
+    console.log("Raw Gemini Output:", text);
+
+    let cleanedText = text;
+
+    // 2. ROBUST FIX: Use Regex to find the JSON object
+    // This looks for the first '{' and the last '}' and ignores everything else.
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
     
-    let raw = text;
-    if (raw.startsWith("```")) {
-      raw = raw.replace(/^```(?:json)?\s*/, "").replace(/\s*```$/, "");
+    if (jsonMatch) {
+      cleanedText = jsonMatch[0];
+    } else {
+      console.error("No JSON object found in response");
+      return NextResponse.json(
+        { error: "AI response format error. Please try again." },
+        { status: 502 }
+      );
     }
 
     let parsed: unknown;
     try {
-      parsed = JSON.parse(raw);
+      parsed = JSON.parse(cleanedText);
     } catch (err) {
-      console.error("Invalid JSON from Gemini:", raw);
+      console.error("JSON Parse Error. Cleaned text was:", cleanedText);
       return NextResponse.json(
         { error: "Gemini returned invalid JSON." },
         { status: 502 }

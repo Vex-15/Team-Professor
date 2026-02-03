@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Search, Calendar, TrendingUp, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  Search,
+  Calendar,
+  TrendingUp,
+  Sparkles,
+} from "lucide-react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -264,10 +270,7 @@ export default function HomePage() {
             <h3 className="text-xl font-bold text-[#111827] mb-4">
               What you need we will provide
             </h3>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 href="/plan"
                 className="inline-flex items-center gap-2 bg-[#111827] text-white px-6 py-3 rounded-[2rem] font-medium"
