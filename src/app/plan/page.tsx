@@ -28,11 +28,14 @@ export default function PlanPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
         const data = await res.json();
+
         if (!res.ok) {
           setError(data.error ?? "Something went wrong.");
           return;
         }
+
         setResult(data as MealPlanResponse);
       } catch {
         setError("Network error. Please try again.");
@@ -54,11 +57,13 @@ export default function PlanPage() {
           <h1 className="text-2xl font-bold text-[#111827] sm:text-3xl">
             Generate Meal Plan
           </h1>
+
           <p className="mt-2 text-[#111827]/70">
-            Enter what you have. We'll suggest meals and honest trade-offs.
+            Enter what you have. We&apos;ll suggest meals and honest trade-offs.
           </p>
+
           <p className="mt-3 text-sm text-[#111827]/60">
-            This doesn't need to be perfect. We work with what you actually
+            This doesn&apos;t need to be perfect. We work with what you actually
             have.
           </p>
         </motion.div>
